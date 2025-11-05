@@ -67,8 +67,15 @@ module "alb" {
   }
 
   listeners = {
-      port     = "80"
-      protocol = "HTTP"
+    ex-https = {
+      port            = 80
+      protocol        = "HTTP"
+
+      forward = {
+        target_group_key = "ex-instance"
+      }
+    }    
+      
   }
 
   tags = {
