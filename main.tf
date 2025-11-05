@@ -67,7 +67,7 @@ module "alb" {
   }
 
   listeners = {
-      port     = 80
+      port     = "80"
       protocol = "HTTP"
   }
 
