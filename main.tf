@@ -78,7 +78,7 @@ module "blog_alb" {
       protocol    = "HTTP"   # was backend_protocol
       port        = 80       # was backend_port
       target_type = "instance"
-      #create_attachment = false
+      create_attachment = false
     }
   }
 
