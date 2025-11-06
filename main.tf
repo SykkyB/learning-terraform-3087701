@@ -43,9 +43,14 @@ module "autoscaling" {
   max_size = 3
 
   vpc_zone_identifier = module.blog_vpc.public_subnets
-  target_group_arns   = [module.blog_alb.target_group["blog"].arn]
+  target_group_arns = [module.blog_alb.target_group_arns[0]]
   security_groups     = [module.blog_sg.security_group_id]
   
+
+  health_check_type         = "ELB"
+  health_check_grace_period = 300
+
+
   image_id               = data.aws_ami.app_ami.id
   instance_type          = var.instance_type
 }
@@ -65,7 +70,7 @@ module "blog_alb" {
       protocol    = "HTTP"   # was backend_protocol
       port        = 80       # was backend_port
       target_type = "instance"
-      create_attachment = false
+      #create_attachment = false
     }
   }
 
