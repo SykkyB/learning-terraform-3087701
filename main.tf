@@ -43,9 +43,17 @@ module "autoscaling" {
   max_size = 3
 
   vpc_zone_identifier = module.blog_vpc.public_subnets
-  target_group_arns = [module.blog_alb.target_group_arns[0]]
+  #target_group_arns = [module.blog_alb.target_group_arns[0]]
   security_groups     = [module.blog_sg.security_group_id]
   
+
+  traffic_source_attachments = {
+    alb = {
+      traffic_source_identifier = module.blog_alb.target_groups["blog"].arn
+      traffic_source_type       = "elbv2"
+    }
+  }
+
 
   health_check_type         = "ELB"
   health_check_grace_period = 300
